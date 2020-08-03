@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Quizz App JS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Quizz App JS</h1>
+        <div class="wrapper">
+            <div class="input-box">
+                <input id="username" type="text" required>
+                <label for="">Your Name</label>
+                <div class="underline"></div>
+                <p id="valid"></p>
+                <button class="start-btn">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <span id="std_name"></span>
+        <div class="ques-no">
+            <p>Question no <span id="qs_no"></span> of <span id="total_qs"></span> </p>
+            <!-- <div class="time_box">
+                <li><span id="min">00</span> Mins</li>
+                <li><span id="sec">00</span> Sec</li>
+            </div> -->
+        </div>
+        <div class="question-box">
+            <h3 id="Ques"></h3>
+            <div class="q q1"></div>
+            <div class="q q2"></div>
+            <div class="q q3"></div>
+            <div class="q q4"></div>
+            <button class="next-btn">Next</button>
+        </div>
+    </div>
+
+    <div class="result_container">
+        <h3>Thank You!</h3>
+        <div class="result_sec">
+            <h4 id="remarks"></h4>
+            <img id="emoji" src="" alt="">
+            <table>
+                <tr>
+                    <td>Total Questions</td>
+                    <td id="total_QS">0</td>
+                </tr>
+                <tr>
+                    <td>Correct</td>
+                    <td id="right_ans">0</td>
+                </tr>
+                <tr>
+                    <td>Wrong</td>
+                    <td id="wrong_ans">0</td>
+                </tr>
+                <tr>
+                    <td>Percentage</td>
+                    <td id="percentage">NiLL</td>
+                </tr>
+            </table>
+            <div class="btn_sec">
+                <button class="try_again">Try Again!</button>
+                <a href="index.html"> <button class="go_home">Go To Home</button></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="app.js"></script>
+
+</html>
