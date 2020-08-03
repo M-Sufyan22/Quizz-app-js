@@ -3,7 +3,8 @@ let username = document.querySelector('#username');
 let container = document.querySelector('.container');
 let valid = document.querySelector('#valid');
 let quiz_container = document.querySelector('.quiz-container');
-let std_name = document.querySelector('#std_name');
+let std_name = document.querySelector('.std_name');
+let std_name1 = document.querySelector('.std_name1');
 let result_container = document.querySelector('.result_container');
 result_container.style.display = 'none';
 let remarks = document.getElementById('remarks');
@@ -17,16 +18,26 @@ start_btn.addEventListener('click', function() {
         container.style.display = 'none';
         quiz_container.style.display = 'block';
         std_name.innerHTML = username.value;
+        std_name1.innerHTML = username.value;
+        timer = setInterval(time_counter, 1000);
     }
 });
 
 var allQs = [{
-        qs: 'What is Color of Mango?',
-        answer: 'Yellow',
-        opt1: 'Red',
-        opt2: 'Orange',
-        opt3: 'Green',
-        opt4: 'Yellow'
+        qs: 'What is the full form of DOM?',
+        answer: 'Document Object Model',
+        opt1: 'Data Object Model',
+        opt2: 'Document Object Model',
+        opt3: 'Delete Object Model',
+        opt4: 'Design Object Model'
+    },
+    {
+        qs: 'The external JavaScript file must contain the <script> tag.',
+        answer: 'True',
+        opt1: 'True',
+        opt2: 'False',
+        opt3: 'All of Above',
+        opt4: 'None of these'
     },
     {
         qs: 'What is the full form of RAM?',
@@ -50,8 +61,19 @@ var allQs = [{
         opt2: 'Lahore',
         opt3: 'Islamabad',
         opt4: 'Peshawar'
-    }
+    },
+    {
+        qs: 'What does HTML stand for?',
+        answer: 'Hyper Text Markup Language',
+        opt1: 'HperLinks Markup Language',
+        opt2: 'Home Tool Markup Language',
+        opt3: 'Hyper Tool Markup Language',
+        opt4: 'Hyper Text Markup Language'
+    },
 ];
+
+
+
 //
 
 let Question = document.getElementById('Ques');
@@ -101,6 +123,7 @@ let r_score = 0;
 let wr_score = 0;
 //
 
+
 Next_btn.addEventListener('click', function() {
     Next_btn.disabled = true;
     Next_btn.style.opacity = .3;
@@ -116,7 +139,8 @@ Next_btn.addEventListener('click', function() {
         wrong_ans.innerHTML = wr_score;
     }
     let perc = r_score * 100 / allQs.length;
-    percentage.innerHTML = perc + "%";
+    let s = Math.floor(perc);
+    percentage.innerHTML = s + "%";
 
     // **********************
 
@@ -161,10 +185,20 @@ Next_btn.addEventListener('click', function() {
             remarks.innerHTML = "Bad Luck! Try Again";
             remarks.style.color = 'red';
             emoji.src = "sad.png";
-        }
+        };
+        let time_taken = document.getElementById('time_taken');
+        time_taken.innerHTML = min + "Mins" + " : " + sec + "sec";
+
+        timers = clearInterval(timer);
+        sec = 0;
+        min = 0;
+        document.getElementById('sec').innerHTML = "00";
+        document.getElementById('min').innerHTML = "00";
     }
     // ***************
 });
+
+
 
 
 //
@@ -178,5 +212,28 @@ try_again.addEventListener('click', function() {
     wr_score = 0;
     right_ans.innerHTML = 0;
     wrong_ans.innerHTML = 0;
+    timer = setInterval(time_counter, 1000);
 });
 //
+
+let sec = 0;
+let min = 0;
+let timer;
+
+function time_counter() {
+    sec++;
+    if (sec < 10) {
+        document.getElementById('sec').innerHTML = "0" + sec;
+    } else {
+        document.getElementById('sec').innerHTML = sec;
+    }
+    if (sec >= 60) {
+        sec = 0;
+        min++;
+    }
+    if (min < 10) {
+        document.getElementById('min').innerHTML = "0" + min;
+    } else {
+        document.getElementById('min').innerHTML = min;
+    }
+}
