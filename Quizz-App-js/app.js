@@ -11,9 +11,14 @@ let remarks = document.getElementById('remarks');
 let emoji = document.getElementById('emoji');
 
 
+
 start_btn.addEventListener('click', function() {
-    if (username.value === '' || username.value === ' ' || username.value === '  ') {
+    let no_space = username.value.trim();
+    let b_s = no_space.length;
+    if (username.value === " ") {
         valid.innerHTML = "Name is Required";
+    } else if (b_s <= 2) {
+        valid.innerHTML = "Name Atleast Contain 3 or More Words!";
     } else {
         container.style.display = 'none';
         quiz_container.style.display = 'block';
@@ -121,26 +126,53 @@ let a = 0;
 crr_Qs_no.innerHTML = a + 1;
 let r_score = 0;
 let wr_score = 0;
+let a_q = 0;
+let Percentage = document.getElementById('percentage');
 //
 
 
+function cal() {
+    let perc = r_score * 100 / allQs.length;
+    let s = Math.floor(perc);
+    percentage.innerHTML = s + "%";
+    if (perc >= 80) {
+        remarks.innerHTML = "Congractulations!";
+        remarks.style.color = 'green';
+        emoji.src = "smile.png";
+    } else if (perc >= 70) {
+        remarks.innerHTML = "Well Done!";
+        remarks.style.color = 'green';
+        emoji.src = "smile.png";
+    } else if (perc >= 50) {
+        remarks.innerHTML = "Good. Keep it Up!";
+        remarks.style.color = 'orange';
+        emoji.src = "smile.png";
+    } else {
+        remarks.innerHTML = "Bad Luck! Try Again";
+        remarks.style.color = 'red';
+        emoji.src = "sad.png";
+    };
+}
 Next_btn.addEventListener('click', function() {
     Next_btn.disabled = true;
     Next_btn.style.opacity = .3;
     let user_answer = document.querySelector('div.selected_answer').innerHTML;
     let right_ans = document.getElementById('right_ans');
     let wrong_ans = document.getElementById('wrong_ans');
-    let Percentage = document.getElementById('percentage');
+    let attemd_qs = document.getElementById('attemd_qs');
+    cal();
     if (user_answer == allQs[a].answer) {
+        a_q++;
         r_score++;
         right_ans.innerHTML = r_score;
+        attemd_qs.innerHTML = a_q;
     } else if (user_answer != allQs[a].answer) {
+        a_q++;
         wr_score++;
         wrong_ans.innerHTML = wr_score;
+        attemd_qs.innerHTML = a_q;
     }
-    let perc = r_score * 100 / allQs.length;
-    let s = Math.floor(perc);
-    percentage.innerHTML = s + "%";
+
 
     // **********************
 
@@ -158,6 +190,7 @@ Next_btn.addEventListener('click', function() {
         opt3.innerHTML = allQs[a].opt3;
         opt4.innerHTML = allQs[a].opt4;
         crr_Qs_no.innerHTML = a + 1;
+
     } else {
         a = 0;
         let b = a + 1
@@ -169,31 +202,11 @@ Next_btn.addEventListener('click', function() {
         crr_Qs_no.innerHTML = a + 1;
         quiz_container.style.display = 'none';
         result_container.style.display = 'block';
-        if (perc >= 80) {
-            remarks.innerHTML = "Congractulations!";
-            remarks.style.color = 'green';
-            emoji.src = "smile.png";
-        } else if (perc >= 70) {
-            remarks.innerHTML = "Well Done!";
-            remarks.style.color = 'green';
-            emoji.src = "smile.png";
-        } else if (perc >= 50) {
-            remarks.innerHTML = "Good. Keep it Up!";
-            remarks.style.color = 'orange';
-            emoji.src = "smile.png";
-        } else {
-            remarks.innerHTML = "Bad Luck! Try Again";
-            remarks.style.color = 'red';
-            emoji.src = "sad.png";
-        };
-        let time_taken = document.getElementById('time_taken');
-        time_taken.innerHTML = min + "Mins" + " : " + sec + "sec";
-
-        timers = clearInterval(timer);
-        sec = 0;
-        min = 0;
-        document.getElementById('sec').innerHTML = "00";
-        document.getElementById('min').innerHTML = "00";
+        clearInterval(timer);
+        sec = 60;
+        min = 01;
+        document.getElementById('sec').innerHTML = "60 Mins";
+        document.getElementById('min').innerHTML = "02 Sec";
     }
     // ***************
 });
@@ -204,36 +217,66 @@ Next_btn.addEventListener('click', function() {
 //
 
 let try_again = document.querySelector('.try_again');
-let go_home = document.querySelector('.go_home');
-try_again.addEventListener('click', function() {
+try_again.addEventListener('click', tryagain);
+
+function tryagain() {
     quiz_container.style.display = 'block';
     result_container.style.display = 'none';
     r_score = 0;
     wr_score = 0;
     right_ans.innerHTML = 0;
     wrong_ans.innerHTML = 0;
+    s = 0;
+    percentage.innerHTML = s + "%";
+    sec = 60;
+    min = 01;
+    document.getElementById('sec').innerHTML = "60 Sec";
+    document.getElementById('min').innerHTML = "02 Mins";
+    a_q = 0;
+    attemd_qs.innerHTML = a_q;
     timer = setInterval(time_counter, 1000);
-});
+};
 //
 
-let sec = 0;
-let min = 0;
+let sec = 60;
+let min = 01;
 let timer;
 
 function time_counter() {
-    sec++;
+    sec--;
     if (sec < 10) {
-        document.getElementById('sec').innerHTML = "0" + sec;
+        document.getElementById('sec').innerHTML = "0" + sec + " Sec";
     } else {
-        document.getElementById('sec').innerHTML = sec;
+        document.getElementById('sec').innerHTML = sec + " Sec";
     }
-    if (sec >= 60) {
-        sec = 0;
-        min++;
+    if (sec <= 0) {
+        sec = 60;
+        min--;
+    }
+    if (sec === 0 || min === 00) {
+        document.getElementById('sec').style.color = 'red';
+    }
+    if (min === -1) {
+        clearInterval(timer);
+        cal();
+        a = 0;
+        let b = a + 1
+        Question.innerHTML = 'Q' + b + ': ' + allQs[a].qs;
+        opt1.innerHTML = allQs[a].opt1;
+        opt2.innerHTML = allQs[a].opt2;
+        opt3.innerHTML = allQs[a].opt3;
+        opt4.innerHTML = allQs[a].opt4;
+        crr_Qs_no.innerHTML = a + 1;
+        let selected_a = document.querySelectorAll('div.q');
+        for (let i = 0; i < selected_a.length; i++) {
+            selected_a[i].classList.remove('selected_answer');
+        }
+        quiz_container.style.display = 'none';
+        result_container.style.display = 'block';
     }
     if (min < 10) {
-        document.getElementById('min').innerHTML = "0" + min;
+        document.getElementById('min').innerHTML = "0" + min + " Mins";
     } else {
-        document.getElementById('min').innerHTML = min;
+        document.getElementById('min').innerHTML = min + " Mins";
     }
 }
