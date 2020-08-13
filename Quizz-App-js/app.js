@@ -14,8 +14,9 @@ let emoji = document.getElementById('emoji');
 
 start_btn.addEventListener('click', function() {
     let no_space = username.value.trim();
-    let b_s = no_space.length;
-    if (username.value === " ") {
+    let validd = no_space.split(" ").join("");
+    let b_s = validd.length;
+    if (b_s == "") {
         valid.innerHTML = "Name is Required";
     } else if (b_s <= 2) {
         valid.innerHTML = "Name Atleast Contain 3 or More Words!";
@@ -125,34 +126,12 @@ let Next_btn = document.querySelector('.next-btn');
 let a = 0;
 crr_Qs_no.innerHTML = a + 1;
 let r_score = 0;
-let wr_score = 0;
+let wr_score;
 let a_q = 0;
 let Percentage = document.getElementById('percentage');
 //
 
 
-function cal() {
-    let perc = r_score * 100 / allQs.length;
-    let s = Math.floor(perc);
-    percentage.innerHTML = s + "%";
-    if (perc >= 80) {
-        remarks.innerHTML = "Congractulations!";
-        remarks.style.color = 'green';
-        emoji.src = "smile.png";
-    } else if (perc >= 70) {
-        remarks.innerHTML = "Well Done!";
-        remarks.style.color = 'green';
-        emoji.src = "smile.png";
-    } else if (perc >= 50) {
-        remarks.innerHTML = "Good. Keep it Up!";
-        remarks.style.color = 'orange';
-        emoji.src = "smile.png";
-    } else {
-        remarks.innerHTML = "Bad Luck! Try Again";
-        remarks.style.color = 'red';
-        emoji.src = "sad.png";
-    };
-}
 Next_btn.addEventListener('click', function() {
     Next_btn.disabled = true;
     Next_btn.style.opacity = .3;
@@ -160,7 +139,7 @@ Next_btn.addEventListener('click', function() {
     let right_ans = document.getElementById('right_ans');
     let wrong_ans = document.getElementById('wrong_ans');
     let attemd_qs = document.getElementById('attemd_qs');
-    cal();
+
     if (user_answer == allQs[a].answer) {
         a_q++;
         r_score++;
@@ -172,7 +151,7 @@ Next_btn.addEventListener('click', function() {
         wrong_ans.innerHTML = wr_score;
         attemd_qs.innerHTML = a_q;
     }
-
+    cal();
 
     // **********************
 
@@ -212,6 +191,28 @@ Next_btn.addEventListener('click', function() {
 });
 
 
+function cal() {
+    let perc = r_score * 100 / allQs.length;
+    let s = Math.floor(perc);
+    percentage.innerHTML = s + "%";
+    if (perc >= 80) {
+        remarks.innerHTML = "Congractulations!";
+        remarks.style.color = 'green';
+        emoji.src = "smile.png";
+    } else if (perc >= 70) {
+        remarks.innerHTML = "Well Done!";
+        remarks.style.color = 'green';
+        emoji.src = "smile.png";
+    } else if (perc >= 50) {
+        remarks.innerHTML = "Good. Keep it Up!";
+        remarks.style.color = 'orange';
+        emoji.src = "smile.png";
+    } else {
+        remarks.innerHTML = "Bad Luck! Try Again";
+        remarks.style.color = 'red';
+        emoji.src = "sad.png";
+    };
+}
 
 
 //
@@ -273,6 +274,8 @@ function time_counter() {
         }
         quiz_container.style.display = 'none';
         result_container.style.display = 'block';
+        Next_btn.disabled = true;
+        document.getElementById('sec').style.color = '#fff';
     }
     if (min < 10) {
         document.getElementById('min').innerHTML = "0" + min + " Mins";
