@@ -189,8 +189,7 @@ h1 {
 
 .time_box li {
     display: inline-block;
-    background: #d3d3d3;
-    /* background: linear-gradient(30deg, #0cb6b6, #21d882); */
+    background: linear-gradient(30deg, #0cb6b6, #21d882);
     border-radius: 50px;
     padding: 5px 10px;
     font-size: 12px;
